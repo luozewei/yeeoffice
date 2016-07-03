@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import {Navigator, Platform, BackAndroid} from 'react-native';
+import _ from 'lodash';
 import * as CustomSceneConfigs from './sceneconfig';
 import connectComponent  from '../utils/';
-import {Chat} from '../layouts/';
+import {Chat, ChatList} from '../layouts/';
 
 
 
@@ -45,6 +46,13 @@ export default class Router {
         this.push(props, {
             component: Chat,
             name: 'chat',
+            sceneConfig: CustomSceneConfigs.customFloatFromRight
+        });
+    }
+    toChatList(props) {
+        this.push(props, {
+            component: ChatList,
+            name: 'chatlist',
             sceneConfig: CustomSceneConfigs.customFloatFromBottom
         });
     }

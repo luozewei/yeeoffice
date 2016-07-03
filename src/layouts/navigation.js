@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, Navigator } from 'react-native';
 import connectComponent from '../utils';
 import config from '../config/';
-import ChatList from './chatlist';
+import Home from './home';
 import Router from '../config/router';
 
-const { height, width } = Dimensions.get('window');
-const component = connectComponent(ChatList);
+const component = connectComponent(Home);
 
 /*首屏页面*/
 const initialRouter = {
@@ -29,10 +28,11 @@ export default class Navigation extends Component {
                     id,
                     index
                 },
-                props
+                ...props
             });
         }
     }
+    
     configureScene(route) {
         if (route.sceneConfig) {
             return route.sceneConfig
@@ -63,8 +63,6 @@ const styles = StyleSheet.create({
     },
     bg: {
         flex: 1,
-        height,
-        width,
         backgroundColor: 'transparent'
     }
 });
