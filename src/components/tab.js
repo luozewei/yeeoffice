@@ -1,46 +1,26 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, Navigator} from 'react-native';
 
-export default class Tab extends Component {
-
+class Tab extends Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            activeIndex: 0
-        }
     }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.activeIndex !== this.props.activeIndex) {
-            this.setState({
-                activeIndex: nextProps.activeIndex
-            });
-        }
-    }
-
     _renderChildren(tab, pageIndex) {
-        let active = pageIndex === this.state.activeIndex;
+        let active = pageIndex === this.props.selectedView;
         return <TouchableOpacity style={styles.tab} key={pageIndex} onPress={() => this.props.actions.update_tab(pageIndex) }>
             <Image source={active ? tab.activeIcon : tab.icon} style={styles.tabIcon}></Image>
             <Text style={styles.tabText}>{tab.title}</Text>
         </TouchableOpacity>;
     }
     render() {
-        console.log(this);
         return (
             <View style={[styles.flexCenter, styles.tabs]}>
-
                 {this.props.tabs.map((tab, i) => this._renderChildren(tab, i)) }
             </View>
         );
     }
 }
-export function mapStateToProps(state) {
-    console.log(state);
-    return {
-        activeIndex: state.activeIndex
-    };
-}
-
+export const LayoutComponent = Tab;
 const styles = StyleSheet.create({
     container: {
         flex: 1,

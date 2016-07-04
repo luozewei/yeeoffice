@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, Navigator} from 'react-native';
 import connectComponent from '../utils/';
-import Tab from '../components/tab';
+import * as Tab from '../components/tab';
 
 const TabComponent = connectComponent(Tab);
 
@@ -24,21 +24,25 @@ const Tabs = [
     }
 ];
 
-export default class Home extends Component {
-
+class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.content}>
-                    <Text>HOME</Text>
-                </View>
+                
                 <TabComponent
                     tabs={Tabs}
+                    selectedView={this.props.activeIndex}
                     >
                 </TabComponent>
             </View>
         );
     }
+}
+export const LayoutComponent = Home;
+export function mapStateToProps(state) {
+    return {
+        activeIndex: state.tab.activeIndex
+    };
 }
 
 const styles = StyleSheet.create({

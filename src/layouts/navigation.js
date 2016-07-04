@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, Navigator } from 'react-native';
 import connectComponent from '../utils';
 import config from '../config/';
-import Home from './home';
+import * as Home   from './home';
 import Router from '../config/router';
 
 const component = connectComponent(Home);
@@ -17,8 +17,10 @@ const initialRouter = {
 
 export default class Navigation extends Component {
     //加载组件
-    renderScene({ component, name, props, id, index }, navigator) {
+    renderScene(route, navigator) {
+        let { component, name, props, id, index } = route;
         this.router = this.router || new Router(navigator);
+
         if (component) {
             return React.createElement(component, {
                 ref: view => this[index] = view,
@@ -30,26 +32,26 @@ export default class Navigation extends Component {
                 },
                 ...props
             });
-        }
     }
-    
-    configureScene(route) {
-        if (route.sceneConfig) {
-            return route.sceneConfig
-        }
-        return Navigator.SceneConfigs.FloatFromRight
+}
+
+configureScene(route) {
+    if (route.sceneConfig) {
+        return route.sceneConfig
     }
-    render() {
-        return <Image
-            source={{ uri: config.bgImgUri }}
-            style={styles.bg}>
-            <Navigator
-                ref={view => this.navigator = view}
-                initialRoute={initialRouter}
-                configureScene={this.configureScene.bind(this) }
-                renderScene={this.renderScene.bind(this) }/>
-        </Image>;
-    }
+    return Navigator.SceneConfigs.FloatFromRight
+}
+render() {
+    return <Image
+        source={{ uri: config.bgImgUri }}
+        style={styles.bg}>
+        <Navigator
+            ref={view => this.navigator = view}
+            initialRoute={initialRouter}
+            configureScene={this.configureScene.bind(this) }
+            renderScene={this.renderScene.bind(this) }/>
+    </Image>;
+}
 }
 
 const styles = StyleSheet.create({

@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
         case Types.UPDATE_TAB:
             return Object.assign({}, state, {
                 activeIndex: action.activeIndex
-            })
+            });
         default:
             return state;
     }
