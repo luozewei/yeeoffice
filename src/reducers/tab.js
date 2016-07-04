@@ -6,7 +6,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case Types.UPDATE_TAB:
+        case Types.TAB_CHANGE:
             return Object.assign({}, state, {
                 activeIndex: action.activeIndex
             });

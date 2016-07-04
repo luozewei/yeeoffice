@@ -1,1 +1,1 @@
-export const UPDATE_TAB = 'UPDATE_TAB';
+export const TAB_CHANGE = 'TAB_CHANGE';

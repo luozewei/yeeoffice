@@ -7,9 +7,9 @@ class Tab extends Component {
     }
     _renderChildren(tab, pageIndex) {
         let active = pageIndex === this.props.selectedView;
-        return <TouchableOpacity style={styles.tab} key={pageIndex} onPress={() => this.props.actions.update_tab(pageIndex) }>
+        return <TouchableOpacity style={styles.tab} key={pageIndex} onPress={this.props.tabChange.bind(this, pageIndex) }>
             <Image source={active ? tab.activeIcon : tab.icon} style={styles.tabIcon}></Image>
-            <Text style={styles.tabText}>{tab.title}</Text>
+            <Text style={[styles.tabText, active ? styles.tabActiveText : null]}>{tab.title}</Text>
         </TouchableOpacity>;
     }
     render() {
@@ -42,6 +42,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     tabText: {
+        fontSize: 12,
+    },
+    tabActiveText: {
         fontSize: 12,
         color: '#428bca'
     },

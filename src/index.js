@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {Provider} from 'react-redux';
 import configureStore from './store/storeconf';
-import {Navigation} from './layouts/';
+import Navigation from './layouts/navigation';
 
 const store = configureStore();
 

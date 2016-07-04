@@ -1,32 +1,18 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, Navigator} from 'react-native';
-import Tab from '../components/tab';
+import {Text, View, Image, StyleSheet} from 'react-native';
 
-
-export default class ChatList extends Component {
-
+class ChatList extends Component {
+    
     render() {
-        return <View style={styles.container}>
-            <View style={[styles.flexCenter]}>
-                <TouchableOpacity onPress={() => this.props.router.toChat() }>
-                    <Text>你好啊</Text>
-                </TouchableOpacity>
-            </View>
-            <Tab></Tab>
-        </View>;
+        return (<View> 
+        <Text>chatlist</Text>
+        </View>
+        );
     }
 }
 
-export function mapStateToProps(state) {
-    return {};
-}
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    flexCenter: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
+export const LayoutComponent=ChatList;
+
+const styles=StyleSheet.create({
+
 });
