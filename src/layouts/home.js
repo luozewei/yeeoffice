@@ -6,6 +6,7 @@ import * as ChatList from './chatlist';
 
 const TabComponent = connectComponent(Tab);
 const ChatListComponent = connectComponent(ChatList);
+
 const Tabs = [
     {
         icon: require('../imgs/message.png'),

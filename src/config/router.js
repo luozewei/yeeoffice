@@ -4,7 +4,7 @@ import {Navigator, Platform, BackAndroid} from 'react-native';
 import _ from 'lodash';
 import * as CustomSceneConfigs from './sceneconfig';
 import connectComponent  from '../utils/';
-import {Message} from '../layouts/';
+import {Home, Message} from '../layouts/';
 
 
 
@@ -40,7 +40,13 @@ export default class Router {
     pop() {
         this.navigator.pop();
     }
-
+    toHome(props) {
+        this.push(props, {
+            component: Home,
+            name: 'home',
+            sceneConfig: CustomSceneConfigs.customFloatFromBottom
+        });
+    }
     toMessage(props) {
         this.push(props, {
             component: Message,

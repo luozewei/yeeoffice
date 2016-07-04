@@ -7,12 +7,12 @@ class Login extends Component {
     }
     render() {
         if (this.props.isLogin) {
-
+            this.props.router.toHome();
         }
         return (
 
             <View style={styles.container}>
-                <TouchableOpacity style={styles.flexcenter} onPress={this.props.actions.user_login('1', '2') }>
+                <TouchableOpacity style={styles.flexcenter} onPress={() => this.props.actions.user_login('1', '2') }>
                     <Text>登录</Text>
                 </TouchableOpacity>
             </View>
