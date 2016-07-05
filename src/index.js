@@ -15,9 +15,9 @@ const store = configureStore();
 export default class App extends Component {
     render() {
         return (
-            <Provider store={store}>
-                <Navigation />
-            </Provider>
+                <Provider store={store}>
+                    <Navigation />
+                </Provider>
         );
     }
 }

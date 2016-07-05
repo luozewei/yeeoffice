@@ -4,7 +4,9 @@ import connectComponent from '../utils';
 import config from '../config/';
 import * as Login   from './login';
 import Router from '../config/router';
+import * as WsRoot from '../components/wsroot';
 
+const WsRootComponent = connectComponent(WsRoot);
 const component = connectComponent(Login);
 
 /*首屏页面*/
@@ -45,6 +47,7 @@ export default class Navigation extends Component {
         return <Image
             source={{ uri: config.bgImgUri }}
             style={styles.bg}>
+            <WsRootComponent></WsRootComponent>
             <Navigator
                 ref={view => this.navigator = view}
                 initialRoute={initialRouter}
