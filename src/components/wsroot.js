@@ -1,28 +1,57 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
-import Signalr from 'signalr-client';
-
+import {Text, View, Image, StyleSheet, Platform} from 'react-native';
+import SignalrHubs from '../api/signalrhubs';
+import signalr from 'react-native-signalr';
 
 class WsRoot extends Component {
     constructor(props, context) {
         super(props, context);
-        this.client = new Signalr.client(
-            'http://192.168.3.238/receiveMessageHub',
-            ['receiveMessageHub'], 2
-        );
-        this.client.on('receiveMessageHub', 'InitiativeGetAllUser', function (d) {
-            console.log(d);
+        this.connection = signalr.hubConnection('http://192.168.3.238', {
+            Accept: 'text/plain, */*; q=0.01'
         });
-        this.client.serviceHandlers.messageReceived = function (d) {
-            /* message: this is the raw message received on the websocket */
-            console.log(d);
-            return true; //if true the client handler for the hub will not be raised.
-            //if false the client handler will be raised.
-        }
+        this.connection.url = 'http://192.168.3.238/receiveMessageHub';
+        let userID = 'i:0#.f|membership|jason.luo@akmiicn.onmicrosoft.com';
+        this.connection.qs = {
+            YGUToken: userID,// "i:0#.f|membership|jason.luo@akmiicn.onmicrosoft.com",
+            ConnectionType: Platform.OS === 'android' ? 'Android' : 'IOS',
+            YunGalaxyUserID: userID,
+            MerchantKey: 'TestKey',
+        };
+        this.proxy = this.connection.createHubProxy('receiveMessageHub');
+        this.proxy.server = SignalrHubs.hubserver;
+
+        this.proxy.on('passivityReceiveMessage', (message) => {
+            console.log(message);
+            //TODO actions
+        });
+        this.connection.connectionSlow(function () {
+            console.log('We are currently experiencing difficulties with the connection.')
+        });
+        this.connection.error(function (error) {
+            console.log('SignalR error: ' + error)
+        });
     }
 
+    WsSendMessage(message) {
+        this.proxy.server.initiativeSendALLNotification(this.proxy, message).done(function (d) {
+            console.log(d);
+        });
+    }
     WsLoginAndStart() {
-        this.client.start();
+        this.connection.start().done(() => {
+            console.log('Now connected, connection ID=' + this.connection.id);
+            console.log(this.proxy.server);
+            this.proxy.server.initiativeGetSubscriptionList(this.proxy).done(function (d) {
+                console.log(d);
+            });
+        }).fail(() => {
+            console.log('fail');
+        });
+        //     this.proxy.server.initiativeGetSubscriptionList(this.proxy).done(function (d) {
+        //     });
+        // }).fail(() => {
+        //     console.log('Failed');
+        // });
     }
     WsError() {
         console.log('ws error');
@@ -37,14 +66,16 @@ class WsRoot extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
         if (nextProps.isLogin !== this.props.isLogin) {
             let {actions} = this.props;
-            if (nextProps.isLogin == 'login') {
+            if (nextProps.isLogin === 'login') {
                 this.WsLoginAndStart();
             } else {
                 this.WsLoginOut();
             }
+        }
+        if (nextProps.sendMessage !== this.props.sendMessage) {
+            this.WsSendMessage(nextProps.sendMessage);
         }
     }
 
@@ -57,6 +88,7 @@ export const LayoutComponent = WsRoot;
 
 export function mapStateToProps(state) {
     return {
-        isLogin: state.user.isLogin
+        isLogin: state.user.isLogin,
+        sendMessage: state.user.sendMessage
     };
 }

@@ -10,17 +10,22 @@ class Login extends Component {
             //this.props.router.toHome();
         }
     }
+    login() {
+        this.props.actions.user_login(this.textInputValue);
+    }
 
     render() {
         return (
             <View style={styles.container}>
                 <TextInput
-                ref 
-                style={[styles.flexcenter, styles.m_10]}
-
-                >
+                    ref={view => this.username = view}
+                    style={[styles.flexcenter, styles.m_10]}
+                    onChangeText={(text) => {
+                        this.textInputValue = text
+                    } }
+                    >
                 </TextInput>
-                <TouchableOpacity style={[styles.flexcenter, styles.button, styles.m_10]} onPress={() => this.props.actions.user_login('1', '2') }>
+                <TouchableOpacity style={[styles.flexcenter, styles.button, styles.m_10]} onPress={this.login.bind(this) }>
                     <Text>登录</Text>
                 </TouchableOpacity>
             </View>

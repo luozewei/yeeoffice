@@ -10,9 +10,10 @@
     "lodash": "^4.13.1",
     "react": "^15.1.0",
     "react-native": "^0.28.0",
+    "react-native-signalr": "0.0.7",
     "react-redux": "^4.4.5",
+    "realm": "^0.14.1",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0",
-    "signalr-client": "^0.0.16"
+    "redux-thunk": "^2.1.0"
   }
 }
