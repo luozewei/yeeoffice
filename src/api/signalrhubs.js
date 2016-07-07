@@ -14,7 +14,10 @@ export default class SignalrHubs {
         },
         initiativeMarkReadGetMessge: function (proxy, id, start, end, isRead, where) {
             return proxy.invoke('initiativeMarkReadGetMessge', id, start, end, isRead, where);
-        }
+        },
+        initiativeGetAllUser: function (proxy) {
+            return proxy.invoke('initiativeGetAllUser');
+        },
     }
 
 }

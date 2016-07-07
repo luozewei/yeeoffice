@@ -3,10 +3,11 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, Navigator, ViewPagerAnd
 import connectComponent from '../utils/';
 import * as Tab from '../components/tab';
 import * as ChatList from './chatlist';
+import * as Header from '../components/header';
 
 const TabComponent = connectComponent(Tab);
 const ChatListComponent = connectComponent(ChatList);
-
+const HeaderComponent = connectComponent(Header);
 const Tabs = [
     {
         icon: require('../imgs/message.png'),
@@ -43,6 +44,7 @@ class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <HeaderComponent></HeaderComponent>
                 <ViewPagerAndroid
                     keyboardDismissMode ='on-drag'
                     ref={(view) => this.viewPager = view}

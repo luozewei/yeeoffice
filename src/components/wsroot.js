@@ -1,27 +1,28 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Platform} from 'react-native';
+import config from '../config';
 import SignalrHubs from '../api/signalrhubs';
 import signalr from 'react-native-signalr';
 
 class WsRoot extends Component {
     constructor(props, context) {
         super(props, context);
-        this.connection = signalr.hubConnection('http://192.168.3.238', {
+        this.connection = signalr.hubConnection(config.domain, {
             Accept: 'text/plain, */*; q=0.01'
         });
-        this.connection.url = 'http://192.168.3.238/receiveMessageHub';
+        this.connection.url = config.domain + config.apiPath;
         let userID = 'i:0#.f|membership|jason.luo@akmiicn.onmicrosoft.com';
         this.connection.qs = {
             YGUToken: userID,// "i:0#.f|membership|jason.luo@akmiicn.onmicrosoft.com",
-            ConnectionType: Platform.OS === 'android' ? 'Android' : 'IOS',
+            ConnectionType: 'Android',
             YunGalaxyUserID: userID,
             MerchantKey: 'TestKey',
         };
-        this.proxy = this.connection.createHubProxy('receiveMessageHub');
+        this.proxy = this.connection.createHubProxy(config.apiPath);
         this.proxy.server = SignalrHubs.hubserver;
 
         this.proxy.on('passivityReceiveMessage', (message) => {
-            console.log(message);
+            console.log(message.Data);
             //TODO actions
         });
         this.connection.connectionSlow(function () {
@@ -39,11 +40,15 @@ class WsRoot extends Component {
     }
     WsLoginAndStart() {
         this.connection.start().done(() => {
+            this.props.actions.user_login('','logined');
             console.log('Now connected, connection ID=' + this.connection.id);
-            console.log(this.proxy.server);
-            this.proxy.server.initiativeGetSubscriptionList(this.proxy).done(function (d) {
-                console.log(d);
+            this.proxy.server.initiativeGetAllUser(this.proxy).done((message) => {
+                console.log(message.Data);
+                this.props.actions.get_all_user(message.Data);
             });
+            // this.proxy.server.initiativeGetSubscriptionList(this.proxy).done(function (d) {
+            //     console.log(d);
+            // });
         }).fail(() => {
             console.log('fail');
         });
@@ -66,6 +71,7 @@ class WsRoot extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
         if (nextProps.isLogin !== this.props.isLogin) {
             let {actions} = this.props;
             if (nextProps.isLogin === 'login') {

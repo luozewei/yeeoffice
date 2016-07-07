@@ -6,12 +6,13 @@ class Login extends Component {
 
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.isLogin !== this.props.isLogin) {
-            //this.props.router.toHome();
+        if (nextProps.isLogin !== this.props.isLogin
+            && nextProps.isLogin === 'logined') {
+            this.props.router.toHome();
         }
     }
     login() {
-        this.props.actions.user_login(this.textInputValue);
+        this.props.actions.user_login(this.textInputValue,'login');
     }
 
     render() {
