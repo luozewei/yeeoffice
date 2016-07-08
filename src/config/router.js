@@ -11,6 +11,7 @@ import {Home, Message} from '../layouts/';
 export default class Router {
     constructor(navigator) {
         this.navigator = navigator;
+        //Android的物理返回键，该返回到哪里，到哪块停止
         if (Platform.OS === 'android') {
             BackAndroid.addEventListener('hardwareBackPress', () => {
                 const routesList = this.navigator.getCurrentRoutes();
@@ -24,7 +25,7 @@ export default class Router {
         }
     }
 
-
+    // 因为有Redux,所以这里会将所有的页面都进行Connect再处理
     push(props = {}, route) {
         let routesList = this.navigator.getCurrentRoutes();
         let nextIndex = routesList[routesList.length - 1].index + 1;
@@ -36,10 +37,11 @@ export default class Router {
         this.navigator.push(route);
     }
 
-
+    //返回
     pop() {
         this.navigator.pop();
     }
+    
     toHome(props) {
         this.push(props, {
             component: Home,

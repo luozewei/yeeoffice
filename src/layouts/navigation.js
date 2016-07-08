@@ -5,6 +5,7 @@ import config from '../config/';
 import * as Login   from './login';
 import Router from '../config/router';
 import * as WsRoot from '../components/wsroot';
+import Toast from '../components/base/toast';
 
 const WsRootComponent = connectComponent(WsRoot);
 const component = connectComponent(Login);
@@ -48,6 +49,7 @@ export default class Navigation extends Component {
             source={{ uri: config.bgImgUri }}
             style={styles.bg}>
             <WsRootComponent></WsRootComponent>
+            <Toast></Toast>
             <Navigator
                 ref={view => this.navigator = view}
                 initialRoute={initialRouter}

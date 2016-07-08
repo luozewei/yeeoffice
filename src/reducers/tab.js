@@ -1,4 +1,4 @@
-import * as Types from '../constants/actiontypes';
+import * as Types from '../config/actiontypes';
 
 const initialState = {
     activeIndex: 0

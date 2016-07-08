@@ -1,4 +1,4 @@
-import * as Types from '../constants/actiontypes';
+import * as Types from '../config/actiontypes';
 
 export const get_message = function (message) {
     return {

@@ -46,17 +46,9 @@ class WsRoot extends Component {
                 console.log(message.Data);
                 this.props.actions.get_all_user(message.Data);
             });
-            // this.proxy.server.initiativeGetSubscriptionList(this.proxy).done(function (d) {
-            //     console.log(d);
-            // });
         }).fail(() => {
             console.log('fail');
         });
-        //     this.proxy.server.initiativeGetSubscriptionList(this.proxy).done(function (d) {
-        //     });
-        // }).fail(() => {
-        //     console.log('Failed');
-        // });
     }
     WsError() {
         console.log('ws error');

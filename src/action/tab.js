@@ -1,4 +1,4 @@
-import * as Types from '../constants/actiontypes';
+import * as Types from '../config/actiontypes';
 
 export const update_tab = function (currentIndex) {
     return {
